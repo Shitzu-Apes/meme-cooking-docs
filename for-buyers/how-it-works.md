@@ -15,7 +15,7 @@ When a token is created, a countdown is started for 5 minutes, 1 hour, or 1 day.
 
 You can withdraw your NEAR before the countdown ends, but you will be penalized with 2% fee for doing so. This fee will be distributed to other people who have the NEAR deposited at the moment when the countdown ends. If the token is not launched, the fee is distributed between people who have the NEAR deposited at the moment when the countdown ends.
 
-![](assets/how-it-works.webp)
+![](/assets/how-it-works.webp)
 
 If the token doesn't make it to 4000 NEAR, anyone can revive it using “Relaunch” button, which creates a new token with the same name, ticker, and other details, and the countdown starts again.
 

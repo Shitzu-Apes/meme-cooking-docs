@@ -13,8 +13,8 @@ Meme.cooking protects you from sniping and rug pulls:
 2. The LP for all tokens is owned by Meme.cooking, and is locked for 8 years after launch, so rug pulls are impossible.
 3. After the launch, the price is just a bit lower than the pre-launch price (because of 0.5% fee), so being the first to dump after the launch is not going to make you any profit.
 
-Check the [How It Works](for-buyers/how-it-works) page for more details.
+Check the [How It Works](/for-buyers/how-it-works) page for more details.
 
 But as always, if the dev decides to abandon the project, and community takeover doesn't happen, there is always a risk of soft rug.
 
-![Socials are on the right](assets/socials.webp)
+![Socials are on the right](/assets/socials.webp)
