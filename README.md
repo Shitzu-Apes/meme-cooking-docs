@@ -1,6 +1,6 @@
 ---
 title: Meme.Cooking Docs
-description: A fair memecoin launchpad.
+description: A fair meme token launchpad.
 icon: "assets/logo.webp"
 ---
 
