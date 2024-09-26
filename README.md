@@ -10,8 +10,7 @@ icon: "assets/logo.webp"
 
 Meme.Cooking is a permissionless meme token launchpad on Near Protocol with the goal of being truly fair and rug-proof.
 This is achieved through a fair, auction-based launch model where, unlike the popular Bonding Curve model, every depositor buys at the same price.
-In addition, all NEAR deposited during the auction is used to create a liquidity pool and the LP units are blocked.
-and the LP shares are locked.
+In addition, all NEAR deposited during the auction is used to create a liquidity pool and the LP shares are locked.
 After the auction, the token will be launched on [Ref Finance](https://app.ref.finance) with the same initial price as during the auction if at least 4k NEAR has been deposited.
 
 ||| Buy a Token
