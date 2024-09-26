@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.780608827953">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.780648873542">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -21,22 +21,21 @@
     <meta property="og:url" content="https://docs.meme.cooking/for-buyers/how-it-works/">
     <meta property="og:title" content="How It Works">
     <meta property="og:description" content="Not too complex, actually.">
-    <meta property="og:image" content="https://docs.meme.cooking/assets/how-it-works.webp">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://docs.meme.cooking/for-buyers/how-it-works/">
     <meta property="twitter:title" content="How It Works">
     <meta property="twitter:description" content="Not too complex, actually.">
-    <meta property="twitter:image" content="https://docs.meme.cooking/assets/how-it-works.webp">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.6.0.780608827953" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.6.0.780648873542" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.780608827953" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.780648873542" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.780608827953" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.780648873542" data-turbo-eval="false" defer></script>
+    <script id="mermaid-js" data-cfasync="false" src="../../resources/js/mermaid.js?v=3.6.0" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -234,18 +233,33 @@
     </h1>
 </doc-anchor-target>
 <p><em>Not too complex, actually.</em></p>
-<p>When a token is created, a countdown is started for 5 minutes, 1 hour, or 1 day. During that time, other people can “stake” and “unstake” NEAR to this memecoin, if they want to buy it.</p>
+<p>When a token is created, a countdown is started for 5 minutes, 1 hour, or 1 day. During that time, other people can deposit and withdraw NEAR to this meme token, if they want to buy it.</p>
 <ul>
-<li>If by the end of the countdown, the token has less than 4000 NEAR (total), all NEAR is refunded to participants, and the token is not launched.</li>
-<li>If it has more than 4000 NEAR staked, the token is launched, the deposited NEAR (excl. protocol fee) and 50% of token supply is deposited on Ref, the LP is locked for 8 years, and the other 50% of tokens is distributed to participants (stakers) proportionally to their stake. If you deposit twice as much NEAR, you get twice as much tokens.</li>
+<li>If by the end of the countdown, the token has less than 4,000 NEAR (total), all NEAR is refunded to participants, and the token is not launched.</li>
+<li>If it has more than 4,000 NEAR deposited, the token is launched, the deposited NEAR (excl. protocol fee) and 50% of token supply is deposited on Ref, the LP is locked for 8 years, and the other 50% of tokens is distributed to depositors proportionally to their deposit. If you deposit twice as much NEAR, you get twice as much tokens.</li>
 </ul>
-<p>You can withdraw your NEAR before the countdown ends, but you will be penalized with 2% fee for doing so. This fee will be distributed to other people who have the NEAR deposited at the moment when the countdown ends. If the token is not launched, the fee is distributed between people who have the NEAR deposited at the moment when the countdown ends.</p>
-<p><figure class="content-center">
-    <img src="../../assets/how-it-works.webp" alt="">
-    <figcaption class="caption"></figcaption>
-</figure>
-</p>
-<p>If the token doesn&#x27;t make it to 4000 NEAR, anyone can revive it using “Relaunch” button, which creates a new token with the same name, ticker, and other details, and the countdown starts again.</p>
+<p>You can withdraw your NEAR before the countdown ends, but you will be penalized with 2% fee for doing so. This fee will be distributed to other people who have the NEAR deposited at the moment when the countdown ends, no matter if the token is launched or not.</p>
+<div class="overflow-hidden mb-6 py-4 dark:px-5 dark:bg-white rounded-md"><pre class="mermaid w-full">%%{
+  init: {
+    'theme': 'forest',
+    'themeVariables': {
+      'background': '#333',
+      'primaryTextColor': '#333',
+      'fontSize': '30px'
+    }
+  }
+}%%
+graph TD;
+    A(Token is created)--&gt;B(People deposit NEAR);
+    B--&gt;C{Reached 4,000 NEAR}
+    C--&gt;|No| D(Token is not launched)
+    D--&gt;E(Depositors are refunded,&lt;br /&gt;no withdrawal fee charged)
+    C--&gt;|Yes| F(Token is launched)
+    F--&gt;G(50% of tokens are locked in Ref LP)
+    G--&gt;H(50% of tokens are sent to depositors)
+</pre></div>
+<p>If the token doesn&#x27;t make it to 4,000 NEAR, anyone can revive it using “Relaunch” button, which creates a new token with the same name, ticker, and other details, and the countdown starts again. Depositors need to actively withdraw their NEAR on the accounts page.</p>
+<p>If the token reaches the necessary deposit amount of 4,000 NEAR, then they can claim their token on the accounts page. Tokens will not be distributed automatically.</p>
 <doc-anchor-target id="examples">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#examples">#</doc-anchor-trigger>
@@ -254,16 +268,16 @@
 </doc-anchor-target>
 <p>Example 1:</p>
 <ul>
-<li>Someone creates a memecoin with 1-day countdown</li>
-<li>The token peaks at 69,000 NEAR total staked</li>
+<li>Someone creates a meme token with 1-day countdown</li>
+<li>The token peaks at 69,000 NEAR total deposited</li>
 <li>The meme fell off, almost everyone has withdrawn everything, only 700 NEAR is left when the countdown ends</li>
 <li>The token is not launched, the last believers who didn&#x27;t withdraw, are fully refunded (except for the 0.5% fee)</li>
 </ul>
 <p>Example 2:</p>
 <ul>
-<li>Someone creates a memecoin with 1-hour countdown</li>
+<li>Someone creates a meme token with 1-hour countdown</li>
 <li>Insiders snipe 25,000 NEAR worth of it</li>
-<li>&lt;insert your favorite CT influencer&gt; calls it, pumping the staked amount to 30,000 NEAR</li>
+<li>&lt;insert your favorite CT influencer&gt; calls it, pumping the deposit amount to 30,000 NEAR</li>
 <li>After the countdown ends, 100% of deposited NEAR and 50% of tokens are deposited and locked on Ref, and users claim their share of tokens at a market cap of 59,700 NEAR</li>
 <li>Insiders bought at the same price as everyone else, and if they dump right after the token launched, they will end up at a loss</li>
 </ul>
@@ -333,6 +347,6 @@
 
     <div id="docs-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "How It Works", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "How It Works", level: 2, icon: "file", hasPrism: false, hasMermaid: true, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>
