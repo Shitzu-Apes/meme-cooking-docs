@@ -2,7 +2,7 @@ input: .
 output: .retype
 url: https://docs.meme.cooking
 branding:
-  title: Meme.cooking
+  title: Meme.Cooking
   label: Docs
   logo: ./assets/logo.webp
 links:
