@@ -10,7 +10,7 @@ order: 0
 Meme.Cooking protects you from sniping and rug pulls:
 
 1. It doesn't matter if you were the first or the last person to buy a token — the price will be the same for everyone. This prevents insiders from sniping the token and gives everyone an equal opportunity.
-2. The LP for all tokens is owned by Meme.Cooking, and is locked for 8 years after launch, so rug pulls are impossible.
+2. The LP for all tokens is owned by Meme.Cooking, and is locked for 69 years after launch, so rug pulls are impossible.
 3. After the launch, the price is just a bit lower than the pre-launch price (because of 0.5% fee), so being the first to dump after the launch is not going to make you any profit.
 
 Check the [How It Works](/for-buyers/how-it-works) page for more details.

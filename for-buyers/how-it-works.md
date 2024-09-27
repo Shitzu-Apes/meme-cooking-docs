@@ -11,7 +11,7 @@ order: 1
 When a token is created, a countdown is started for 5 minutes, 1 hour, or 1 day. During that time, other people can deposit and withdraw NEAR to this meme token, if they want to buy it.
 
 * If by the end of the countdown, the token has less than 4,000 NEAR (total), all NEAR is refunded to participants, and the token is not launched.
-* If it has more than 4,000 NEAR deposited, the token is launched, the deposited NEAR (excl. protocol fee) and 50% of token supply is deposited on Ref, the LP is locked for 8 years, and the other 50% of tokens is distributed to depositors proportionally to their deposit. If you deposit twice as much NEAR, you get twice as much tokens.
+* If it has more than 4,000 NEAR deposited, the token is launched, the deposited NEAR (excl. protocol fee) and 50% of token supply is deposited on Ref, the LP is locked for 69 years, and the other 50% of tokens is distributed to depositors proportionally to their deposit. If you deposit twice as much NEAR, you get twice as much tokens.
 
 You can withdraw your NEAR before the countdown ends, but you will be penalized with 2% fee for doing so. This fee will be distributed to other people who have the NEAR deposited at the moment when the countdown ends, no matter if the token is launched or not.
 
