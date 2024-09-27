@@ -35,7 +35,7 @@ This guide helps you understand which bridging solution is best suited to your n
 :::badges
 [!badge variant="danger" text="Gas Topup: :no_entry:"]
 [!badge variant="success" text="ETA: 15s"]
-[!badge variant="warning" text="Fees: very low (bridge) & medium (swap)"]
+[!badge variant="success" text="Fees: very low (bridge) & low (swap)"]
 :::
 
 - Convert your SOL on Solana to SOL.w (Wormhole wrapped SOL) on Near via [TokenBridge](https://tokenbridge.app/).
