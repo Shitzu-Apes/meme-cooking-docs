@@ -13,6 +13,8 @@ This is achieved through a fair, auction-based launch model where, unlike the po
 In addition, all NEAR deposited during the auction is used to create a liquidity pool and the LP shares are locked.
 After the auction, the token will be launched on [Ref Finance](https://app.ref.finance) with the same initial price as during the auction if at least 4k NEAR has been deposited.
 
+Meme.Cooking is built with ❤️ by [Shitzu](https://shitzuapes.xyz/).
+
 ||| Buy a Token
 <a href="/for-buyers/buy-a-token"><figure class="content-center"><img src="/assets/yummi.webp" alt="Learn how to buy a meme without getting rugged"><figcaption class="caption"><em>Learn how to buy a meme without getting rugged</em></figcaption></figure></a>
 ||| Launch a Token
