@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781075793339">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.783683778628">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -30,11 +30,11 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.6.0.781075793339" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.6.0.783683778628" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.781075793339" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.6.0.783683778628" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.781075793339" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.6.0.783683778628" data-turbo-eval="false" defer></script>
     <script id="mermaid-js" data-cfasync="false" src="../../resources/js/mermaid.js?v=3.6.0" defer></script>
 </head>
 <body>
@@ -233,12 +233,15 @@
     </h1>
 </doc-anchor-target>
 <p><em>Not too complex, actually.</em></p>
-<p>When a token is created, a countdown is started for 5 minutes, 1 hour, or 1 day. During that time, other people can deposit and withdraw NEAR to this meme token, if they want to buy it.</p>
+<p>When a token is created, a countdown is started. Anything between 5 minutes and 1 day can be configured. During that time, other people can deposit and withdraw NEAR to this meme token, if they want to buy it.</p>
 <ul>
-<li>If by the end of the countdown, the token has less than 4,000 NEAR (total), all NEAR is refunded to participants, and the token is not launched.</li>
-<li>If it has more than 4,000 NEAR deposited, the token is launched, the deposited NEAR (excl. protocol fee) and 50% of token supply is deposited on Ref, the LP is locked for 69 years, and the other 50% of tokens is distributed to depositors proportionally to their deposit. If you deposit twice as much NEAR, you get twice as much tokens.</li>
+<li>If by the end of the countdown, the token has less NEAR deposited than the configured soft cap, all NEAR is refunded to participants, and the token is not launched. Depositors need to actively withdraw their NEAR on the accounts page.</li>
+<li>If it has more NEAR deposited than the configured soft cap, the token is launched.</li>
+<li>If a hard cap is configured and the meme token reaches this cap prior to the end of the countdown, the token will be launched immediately.</li>
+<li>If the token launches successfully the deposited NEAR (excl. protocol fee) and ~50% of total distributed supply is deposited on Ref Finance, the LP is locked for 69 years, and the other ~50% of tokens is distributed to depositors proportionally to their deposit. If you deposit twice as much NEAR, you get twice as much tokens. The total distributed supply depends on whether a team allocation has been set up, e.g. if there is a 30% team allocation then ~35% will go to the LP and the other ~35% will go to depositors.</li>
+<li>You can withdraw your NEAR before the countdown ends, but you will be penalized with 2% fee for doing so. This fee will be distributed to other people who have the NEAR deposited at the moment when the countdown ends, no matter if the token is launched or not.</li>
+<li>If the token reaches the necessary deposit amount of the configured soft cap, then they can claim their token on the accounts page. Tokens will not be distributed automatically.</li>
 </ul>
-<p>You can withdraw your NEAR before the countdown ends, but you will be penalized with 2% fee for doing so. This fee will be distributed to other people who have the NEAR deposited at the moment when the countdown ends, no matter if the token is launched or not.</p>
 <div class="overflow-hidden mb-6 py-4 dark:px-5 dark:bg-white rounded-md"><pre class="mermaid w-full">%%{
   init: {
     'theme': 'forest',
@@ -249,17 +252,20 @@
     }
   }
 }%%
-graph TD;
+flowchart TD;
     A(Token is created)--&gt;B(People deposit NEAR);
-    B--&gt;C{Reached 4,000 NEAR}
-    C--&gt;|No| D(Token is not launched)
-    D--&gt;E(Depositors are refunded,&lt;br /&gt;no withdrawal fee charged)
-    C--&gt;|Yes| F(Token is launched)
-    F--&gt;G(50% of tokens are locked in Ref LP)
-    G--&gt;H(50% of tokens are sent to depositors)
+    B--&gt;C{Hard cap configured}
+    C--&gt;|No| E
+    C--&gt;|Yes| D{Reached hard cap}
+    D--&gt;|No| E{Reached soft cap}
+    D--&gt;|Yes| J(Token is launched)
+    E--&gt;|No| F(Token is not launched)
+    F--&gt;I(Depositors are refunded,&lt;br /&gt;no withdrawal fee charged)
+    E--&gt;|Yes| G(Countdown runs out)
+    G--&gt;J(Token is launched)
+    J--&gt;K(50% of tokens are locked in Ref LP)
+    K--&gt;L(50% of tokens are sent to depositors)
 </pre></div>
-<p>If the token doesn&#x27;t make it to 4,000 NEAR, anyone can revive it using “Relaunch” button, which creates a new token with the same name, ticker, and other details, and the countdown starts again. Depositors need to actively withdraw their NEAR on the accounts page.</p>
-<p>If the token reaches the necessary deposit amount of 4,000 NEAR, then they can claim their token on the accounts page. Tokens will not be distributed automatically.</p>
 <doc-anchor-target id="examples">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#examples">#</doc-anchor-trigger>
