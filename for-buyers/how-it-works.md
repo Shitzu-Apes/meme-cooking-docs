@@ -8,12 +8,14 @@ order: 1
 
 *Not too complex, actually.*
 
-When a token is created, a countdown is started for 5 minutes, 1 hour, or 1 day. During that time, other people can deposit and withdraw NEAR to this meme token, if they want to buy it.
+When a token is created, a countdown is started. Anything between 5 minutes and 1 day can be configured. During that time, other people can deposit and withdraw NEAR to this meme token, if they want to buy it.
 
-* If by the end of the countdown, the token has less than 4,000 NEAR (total), all NEAR is refunded to participants, and the token is not launched.
-* If it has more than 4,000 NEAR deposited, the token is launched, the deposited NEAR (excl. protocol fee) and 50% of token supply is deposited on Ref, the LP is locked for 69 years, and the other 50% of tokens is distributed to depositors proportionally to their deposit. If you deposit twice as much NEAR, you get twice as much tokens.
-
-You can withdraw your NEAR before the countdown ends, but you will be penalized with 2% fee for doing so. This fee will be distributed to other people who have the NEAR deposited at the moment when the countdown ends, no matter if the token is launched or not.
+* If by the end of the countdown, the token has less NEAR deposited than the configured soft cap, all NEAR is refunded to participants, and the token is not launched. Depositors need to actively withdraw their NEAR on the accounts page.
+* If it has more NEAR deposited than the configured soft cap, the token is launched.
+* If a hard cap is configured and the meme token reaches this cap prior to the end of the countdown, the token will be launched immediately.
+* If the token launches successfully the deposited NEAR (excl. protocol fee) and ~50% of total distributed supply is deposited on Ref Finance, the LP is locked for 69 years, and the other ~50% of tokens is distributed to depositors proportionally to their deposit. If you deposit twice as much NEAR, you get twice as much tokens. The total distributed supply depends on whether a team allocation has been set up, e.g. if there is a 30% team allocation then ~35% will go to the LP and the other ~35% will go to depositors.
+* You can withdraw your NEAR before the countdown ends, but you will be penalized with 2% fee for doing so. This fee will be distributed to other people who have the NEAR deposited at the moment when the countdown ends, no matter if the token is launched or not.
+* If the token reaches the necessary deposit amount of the configured soft cap, then they can claim their token on the accounts page. Tokens will not be distributed automatically.
 
 ```mermaid
 %%{
@@ -26,20 +28,21 @@ You can withdraw your NEAR before the countdown ends, but you will be penalized 
     }
   }
 }%%
-graph TD;
+flowchart TD;
     A(Token is created)-->B(People deposit NEAR);
-    B-->C{Reached 4,000 NEAR}
-    C-->|No| D(Token is not launched)
-    D-->E(Depositors are refunded,<br />no withdrawal fee charged)
-    C-->|Yes| F(Token is launched)
-    F-->G(50% of tokens are locked in Ref LP)
-    G-->H(50% of tokens are sent to depositors)
+    B-->C{Hard cap configured}
+    C-->|No| E
+    C-->|Yes| D{Reached hard cap}
+    D-->|No| E{Reached soft cap}
+    D-->|Yes| J(Token is launched)
+    E-->|No| F(Token is not launched)
+    F-->I(Depositors are refunded,<br />no withdrawal fee charged)
+    E-->|Yes| G(Countdown runs out)
+    G-->J(Token is launched)
+    J-->K(50% of tokens are locked in Ref LP)
+    K-->L(50% of tokens are sent to depositors)
 
 ```
-
-If the token doesn't make it to 4,000 NEAR, anyone can revive it using “Relaunch” button, which creates a new token with the same name, ticker, and other details, and the countdown starts again. Depositors need to actively withdraw their NEAR on the accounts page.
-
-If the token reaches the necessary deposit amount of 4,000 NEAR, then they can claim their token on the accounts page. Tokens will not be distributed automatically.
 
 ### Examples
 

@@ -8,9 +8,9 @@
     ],
     "build": {
       "compiler": "rustc 1.81.0",
-      "builder": "cargo-near cargo-near-build 0.1.1"
+      "builder": "cargo-near cargo-near-build 0.2.0"
     },
-    "wasm_hash": "7EQ3Rdp8EUocrgPjx1sKygxxCtMVmL4auHhffXmAiLhJ"
+    "wasm_hash": "GhELF9t7i24TdsYnTbwFipZo1KHbpyj5Ads128QEyynS"
   },
   "body": {
     "functions": [
@@ -45,14 +45,11 @@
           "serialization_type": "json",
           "args": [
             {
-              "name": "meme_ids",
+              "name": "meme_id",
               "type_schema": {
-                "type": "array",
-                "items": {
-                  "type": "integer",
-                  "format": "uint32",
-                  "minimum": 0.0
-                }
+                "type": "integer",
+                "format": "uint32",
+                "minimum": 0.0
               }
             }
           ]
@@ -60,7 +57,7 @@
         "result": {
           "serialization_type": "json",
           "type_schema": {
-            "$ref": "#/definitions/PromiseOrValueNull"
+            "$ref": "#/definitions/Promise"
           }
         }
       },
@@ -97,6 +94,32 @@
         "modifiers": [
           "payable"
         ],
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "$ref": "#/definitions/Promise"
+          }
+        }
+      },
+      {
+        "name": "claim_vesting",
+        "kind": "call",
+        "modifiers": [
+          "payable"
+        ],
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "meme_id",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint32",
+                "minimum": 0.0
+              }
+            }
+          ]
+        },
         "result": {
           "serialization_type": "json",
           "type_schema": {
@@ -182,6 +205,49 @@
               "type_schema": {
                 "$ref": "#/definitions/AccountId"
               }
+            },
+            {
+              "name": "soft_cap",
+              "type_schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "hard_cap",
+              "type_schema": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            {
+              "name": "team_allocation",
+              "type_schema": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": [
+                  {
+                    "type": "integer",
+                    "format": "uint16",
+                    "minimum": 0.0
+                  },
+                  {
+                    "type": "integer",
+                    "format": "uint64",
+                    "minimum": 0.0
+                  },
+                  {
+                    "type": "integer",
+                    "format": "uint64",
+                    "minimum": 0.0
+                  }
+                ],
+                "maxItems": 3,
+                "minItems": 3
+              }
             }
           ]
         },
@@ -260,6 +326,21 @@
               "name": "deposit_token_id",
               "type_schema": {
                 "$ref": "#/definitions/AccountId"
+              }
+            },
+            {
+              "name": "soft_cap",
+              "type_schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "hard_cap",
+              "type_schema": {
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           ]
@@ -639,6 +720,34 @@
       },
       {
         "name": "migrate",
+        "kind": "call",
+        "modifiers": [
+          "init"
+        ],
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "launch_fee",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint8",
+                "minimum": 0.0
+              }
+            },
+            {
+              "name": "max_finalized_id",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint32",
+                "minimum": 0.0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "migrate_self",
         "kind": "view",
         "modifiers": [
           "private"
@@ -703,6 +812,14 @@
               }
             },
             {
+              "name": "launch_fee",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint8",
+                "minimum": 0.0
+              }
+            },
+            {
               "name": "required_stakes",
               "type_schema": {
                 "type": "array",
@@ -753,30 +870,89 @@
           "private"
         ],
         "params": {
-          "serialization_type": "json",
+          "serialization_type": "borsh",
           "args": [
             {
               "name": "sender_id",
               "type_schema": {
-                "$ref": "#/definitions/AccountId"
+                "declaration": "AccountId",
+                "definitions": {
+                  "AccountId": {
+                    "Struct": [
+                      "String"
+                    ]
+                  },
+                  "String": {
+                    "Sequence": {
+                      "length_width": 4,
+                      "length_range": {
+                        "start": 0,
+                        "end": 4294967295
+                      },
+                      "elements": "u8"
+                    }
+                  },
+                  "u8": {
+                    "Primitive": 1
+                  }
+                }
               }
             },
             {
-              "name": "meme_ids",
+              "name": "meme_id",
               "type_schema": {
-                "type": "array",
-                "items": {
-                  "type": "integer",
-                  "format": "uint32",
-                  "minimum": 0.0
+                "declaration": "u32",
+                "definitions": {
+                  "u32": {
+                    "Primitive": 4
+                  }
+                }
+              }
+            },
+            {
+              "name": "deposit",
+              "type_schema": {
+                "declaration": "u128",
+                "definitions": {
+                  "u128": {
+                    "Primitive": 16
+                  }
+                }
+              }
+            },
+            {
+              "name": "income",
+              "type_schema": {
+                "declaration": "u128",
+                "definitions": {
+                  "u128": {
+                    "Primitive": 16
+                  }
+                }
+              }
+            },
+            {
+              "name": "shitstars",
+              "type_schema": {
+                "declaration": "u128",
+                "definitions": {
+                  "u128": {
+                    "Primitive": 16
+                  }
                 }
               }
             }
           ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "null"
+          }
         }
       },
       {
-        "name": "on_claim_earnings",
+        "name": "on_claim_income",
         "kind": "call",
         "modifiers": [
           "private"
@@ -863,6 +1039,77 @@
         }
       },
       {
+        "name": "on_claim_vesting",
+        "kind": "call",
+        "modifiers": [
+          "private"
+        ],
+        "params": {
+          "serialization_type": "borsh",
+          "args": [
+            {
+              "name": "meme_id",
+              "type_schema": {
+                "declaration": "u32",
+                "definitions": {
+                  "u32": {
+                    "Primitive": 4
+                  }
+                }
+              }
+            },
+            {
+              "name": "claim_amount",
+              "type_schema": {
+                "declaration": "u128",
+                "definitions": {
+                  "u128": {
+                    "Primitive": 16
+                  }
+                }
+              }
+            },
+            {
+              "name": "previous_claim_ms",
+              "type_schema": {
+                "declaration": "Option<u64>",
+                "definitions": {
+                  "()": {
+                    "Primitive": 0
+                  },
+                  "Option<u64>": {
+                    "Enum": {
+                      "tag_width": 1,
+                      "variants": [
+                        [
+                          0,
+                          "None",
+                          "()"
+                        ],
+                        [
+                          1,
+                          "Some",
+                          "u64"
+                        ]
+                      ]
+                    }
+                  },
+                  "u64": {
+                    "Primitive": 8
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "result": {
+          "serialization_type": "json",
+          "type_schema": {
+            "type": "null"
+          }
+        }
+      },
+      {
         "name": "on_finalize",
         "kind": "call",
         "modifiers": [
@@ -876,6 +1123,9 @@
               "type_schema": {
                 "declaration": "Meme",
                 "definitions": {
+                  "()": {
+                    "Primitive": 0
+                  },
                   "AccountId": {
                     "Struct": [
                       "String"
@@ -964,6 +1214,30 @@
                         "AccountId"
                       ],
                       [
+                        "soft_cap",
+                        "u128"
+                      ],
+                      [
+                        "hard_cap",
+                        "Option<u128>"
+                      ],
+                      [
+                        "team_allocation",
+                        "Option<TeamAllocation>"
+                      ],
+                      [
+                        "vesting",
+                        "Option<Vesting>"
+                      ],
+                      [
+                        "pool_amount",
+                        "u128"
+                      ],
+                      [
+                        "amount_to_be_distributed",
+                        "u128"
+                      ],
+                      [
                         "total_staked",
                         "u128"
                       ],
@@ -977,6 +1251,57 @@
                       ]
                     ]
                   },
+                  "Option<TeamAllocation>": {
+                    "Enum": {
+                      "tag_width": 1,
+                      "variants": [
+                        [
+                          0,
+                          "None",
+                          "()"
+                        ],
+                        [
+                          1,
+                          "Some",
+                          "TeamAllocation"
+                        ]
+                      ]
+                    }
+                  },
+                  "Option<Vesting>": {
+                    "Enum": {
+                      "tag_width": 1,
+                      "variants": [
+                        [
+                          0,
+                          "None",
+                          "()"
+                        ],
+                        [
+                          1,
+                          "Some",
+                          "Vesting"
+                        ]
+                      ]
+                    }
+                  },
+                  "Option<u128>": {
+                    "Enum": {
+                      "tag_width": 1,
+                      "variants": [
+                        [
+                          0,
+                          "None",
+                          "()"
+                        ],
+                        [
+                          1,
+                          "Some",
+                          "u128"
+                        ]
+                      ]
+                    }
+                  },
                   "String": {
                     "Sequence": {
                       "length_width": 4,
@@ -986,6 +1311,22 @@
                       },
                       "elements": "u8"
                     }
+                  },
+                  "TeamAllocation": {
+                    "Struct": [
+                      [
+                        "amount",
+                        "u128"
+                      ],
+                      [
+                        "vesting_duration_ms",
+                        "u64"
+                      ],
+                      [
+                        "cliff_duration_ms",
+                        "u64"
+                      ]
+                    ]
                   },
                   "Vec<u8>": {
                     "Sequence": {
@@ -1006,6 +1347,18 @@
                       [
                         "values",
                         "IndexMap"
+                      ]
+                    ]
+                  },
+                  "Vesting": {
+                    "Struct": [
+                      [
+                        "already_claimed",
+                        "u128"
+                      ],
+                      [
+                        "last_claim_ms",
+                        "u64"
                       ]
                     ]
                   },
@@ -1144,6 +1497,39 @@
       {
         "name": "resume",
         "kind": "call"
+      },
+      {
+        "name": "set_fees",
+        "kind": "call",
+        "params": {
+          "serialization_type": "json",
+          "args": [
+            {
+              "name": "deposit_fee",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint8",
+                "minimum": 0.0
+              }
+            },
+            {
+              "name": "withdraw_fee",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint8",
+                "minimum": 0.0
+              }
+            },
+            {
+              "name": "launch_fee",
+              "type_schema": {
+                "type": "integer",
+                "format": "uint8",
+                "minimum": 0.0
+              }
+            }
+          ]
+        }
       },
       {
         "name": "set_token_config",
@@ -1491,6 +1877,7 @@
         "MemeInfo": {
           "type": "object",
           "required": [
+            "amount_to_be_distributed",
             "decimals",
             "deposit_token_id",
             "end_timestamp_ms",
@@ -1498,14 +1885,19 @@
             "id",
             "name",
             "owner",
+            "pool_amount",
             "reference",
             "reference_hash",
+            "soft_cap",
             "symbol",
             "total_staked",
             "total_supply",
             "total_withdrawal_fees"
           ],
           "properties": {
+            "amount_to_be_distributed": {
+              "type": "string"
+            },
             "decimals": {
               "type": "integer",
               "format": "uint8",
@@ -1516,6 +1908,12 @@
             },
             "end_timestamp_ms": {
               "type": "string"
+            },
+            "hard_cap": {
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "icon": {
               "type": "string"
@@ -1531,14 +1929,30 @@
             "owner": {
               "$ref": "#/definitions/AccountId"
             },
+            "pool_amount": {
+              "type": "string"
+            },
             "reference": {
               "type": "string"
             },
             "reference_hash": {
               "type": "string"
             },
+            "soft_cap": {
+              "type": "string"
+            },
             "symbol": {
               "type": "string"
+            },
+            "team_allocation": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/TeamAllocationInfo"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "total_staked": {
               "type": "string"
@@ -1548,6 +1962,16 @@
             },
             "total_withdrawal_fees": {
               "type": "string"
+            },
+            "vesting": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/VestingInfo"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           }
         },
@@ -1601,6 +2025,44 @@
               "type": "string"
             },
             "perMemeDeposit": {
+              "type": "string"
+            }
+          }
+        },
+        "TeamAllocationInfo": {
+          "type": "object",
+          "required": [
+            "amount",
+            "cliff_duration_ms",
+            "vesting_duration_ms"
+          ],
+          "properties": {
+            "amount": {
+              "type": "string"
+            },
+            "cliff_duration_ms": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "vesting_duration_ms": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        },
+        "VestingInfo": {
+          "type": "object",
+          "required": [
+            "already_claimed",
+            "last_claim_ms"
+          ],
+          "properties": {
+            "already_claimed": {
+              "type": "string"
+            },
+            "last_claim_ms": {
               "type": "string"
             }
           }

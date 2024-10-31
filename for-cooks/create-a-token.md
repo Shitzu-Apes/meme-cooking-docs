@@ -9,6 +9,25 @@ order: 0
 
 [!embed](/assets/create.mp4)
 
-Just add a logo, token name, ticker, and confirm the transaction. Don't forget to [buy your token](/for-buyers/buy-a-token) after creating it!
+### Basic information
 
-It usually takes a few seconds for your meme to appear on the board.
+Add your basic information like logo, token name, ticker and description.
+
+### Duration
+
+Select an auction duration between 5 minutes and 1 day.
+
+### Soft Cap & Hard Cap
+
+The soft cap is the minimum required to launch on Ref Finance once the duration is over. The harc cap is optional. If it is enabled and reached, it will trigger an immediate launch.
+
+### Team Allocation
+
+If team allocation is enabled, then upon successful launch the token creator can claim a percentage of total supply.
+The team allocation can have a fully configurable cliff and linear vesting period.
+
+### Socials
+
+Add your social information: 𝕏, Telegram and website
+
+_It usually takes a few seconds for your meme to appear on the board._
